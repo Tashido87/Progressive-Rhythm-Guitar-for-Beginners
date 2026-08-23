@@ -53,7 +53,7 @@ export const OpenPositionNotesViewer: React.FC = () => {
   const itemWidth = 44;
   const startOffset = 50;
   const totalSvgWidth = startOffset + OPEN_POSITION_NOTES.length * itemWidth + 25;
-  const svgHeight = 150;
+  const svgHeight = 185;
 
   return (
     <div className="bg-white border border-slate-200 rounded-3xl p-5 sm:p-7 shadow-sm space-y-6">
@@ -113,13 +113,13 @@ export const OpenPositionNotesViewer: React.FC = () => {
             <text x={startOffset - 18} y={12} fontSize="9" fontWeight="900" fontFamily="sans-serif" fill="#64748b" textAnchor="end">
               NOTE
             </text>
-            <text x={startOffset - 18} y={105} fontSize="9" fontWeight="900" fontFamily="sans-serif" fill="#64748b" textAnchor="end">
+            <text x={startOffset - 18} y={142} fontSize="9" fontWeight="900" fontFamily="sans-serif" fill="#64748b" textAnchor="end">
               STRING
             </text>
-            <text x={startOffset - 18} y={122} fontSize="9" fontWeight="900" fontFamily="sans-serif" fill="#64748b" textAnchor="end">
+            <text x={startOffset - 18} y={162} fontSize="9" fontWeight="900" fontFamily="sans-serif" fill="#64748b" textAnchor="end">
               FRET &
             </text>
-            <text x={startOffset - 18} y={134} fontSize="9" fontWeight="900" fontFamily="sans-serif" fill="#64748b" textAnchor="end">
+            <text x={startOffset - 18} y={174} fontSize="9" fontWeight="900" fontFamily="sans-serif" fill="#64748b" textAnchor="end">
               FINGERING
             </text>
 
@@ -141,7 +141,7 @@ export const OpenPositionNotesViewer: React.FC = () => {
                       x={x - 18}
                       y={4}
                       width={36}
-                      height={140}
+                      height={176}
                       fill="#ea580c"
                       fillOpacity="0.15"
                       rx="6"
@@ -210,7 +210,7 @@ export const OpenPositionNotesViewer: React.FC = () => {
                   {/* STRING NUMBER (6, 5, 4, 3, 2, 1) */}
                   <text
                     x={x}
-                    y={105}
+                    y={142}
                     fontSize="12"
                     fontWeight="bold"
                     fontFamily="monospace"
@@ -223,7 +223,7 @@ export const OpenPositionNotesViewer: React.FC = () => {
                   {/* FRET & FINGERING (0, 1, 3...) */}
                   <text
                     x={x}
-                    y={128}
+                    y={168}
                     fontSize="12"
                     fontWeight="bold"
                     fontFamily="monospace"

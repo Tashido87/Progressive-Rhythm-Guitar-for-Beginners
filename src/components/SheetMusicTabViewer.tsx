@@ -195,7 +195,8 @@ function getOrGenerateScoreBars(exercise: ExerciseData): ScoreBar[] {
     return exercise.scoreNotation.bars;
   }
 
-  const beatsInBar = exercise.timeSignature === '3/4' ? 3 : exercise.timeSignature === '6/8' ? 6 : 4;
+  const timeSig = exercise.timeSignature || '4/4';
+  const beatsInBar = timeSig === '3/4' ? 3 : timeSig === '6/8' ? 6 : 4;
   const isBassStrumExercise =
     exercise.id === 'ex_18' ||
     exercise.rhythmPatternId === 'r_bass_pick' ||
@@ -203,15 +204,60 @@ function getOrGenerateScoreBars(exercise: ExerciseData): ScoreBar[] {
     exercise.title.toLowerCase().includes('bass') ||
     exercise.titleMy.includes('Bass');
 
+  const isAlternatingBass =
+    exercise.id === 'ex_19' ||
+    exercise.rhythmPatternId === 'r_country_alternating' ||
+    exercise.title.toLowerCase().includes('alternating') ||
+    exercise.titleMy.includes('အလှည့်ကျ');
+
+  const isAllEighths =
+    exercise.rhythmPatternId === 'r_eighth_full' ||
+    exercise.rhythmPatternId === 'r_8ths' ||
+    exercise.rhythmPatternId === 'r_rock_8ths';
+
+  const isBeat2Eighths =
+    exercise.rhythmPatternId === 'r_down_up_beat2' ||
+    exercise.rhythmPatternId === 'r_du_beat2';
+
   const generatedBars: ScoreBar[] = [];
   let currentBarNum = 1;
 
   exercise.chords.forEach((chordItem) => {
     for (let b = 0; b < chordItem.bars; b++) {
       const rootInfo = getChordRootInfo(chordItem.chordName);
+      const altBassString = rootInfo.string === 5 ? 4 : rootInfo.string === 6 ? 5 : 5;
+      const altBassFret = rootInfo.string === 5 ? (chordItem.chordName.startsWith('C') ? 2 : 2) : 2;
       const beats: ScoreBeat[] = [];
 
-      if (isBassStrumExercise) {
+      if (isAlternatingBass) {
+        // Exercise 19 pattern: Beat 1: Root Bass, Beat 2: Strum V, Beat 3: Alternate Bass, Beat 4: Strum V
+        beats.push({
+          beatNumber: '1',
+          type: 'bass',
+          string: rootInfo.string,
+          fret: rootInfo.fret,
+          label: 'Bass 1'
+        });
+        beats.push({
+          beatNumber: '2',
+          type: 'down-strum',
+          strumMark: 'V',
+          label: 'Strum'
+        });
+        beats.push({
+          beatNumber: '3',
+          type: 'bass',
+          string: altBassString,
+          fret: altBassFret,
+          label: 'Bass 2'
+        });
+        beats.push({
+          beatNumber: '4',
+          type: 'down-strum',
+          strumMark: 'V',
+          label: 'Strum'
+        });
+      } else if (isBassStrumExercise) {
         // Exercise 18 pattern: Beat 1: Bass, Beat 2: Down-strum (V), Beat 3: Down-strum (V), Beat 4: Bass
         beats.push({
           beatNumber: '1',
@@ -239,8 +285,31 @@ function getOrGenerateScoreBars(exercise: ExerciseData): ScoreBar[] {
           fret: rootInfo.fret,
           label: 'Bass'
         });
+      } else if (isAllEighths) {
+        // 8 eighth notes: V ⋀ V ⋀ V ⋀ V ⋀
+        for (let i = 1; i <= 4; i++) {
+          beats.push({
+            beatNumber: i.toString(),
+            type: 'down-strum',
+            strumMark: 'V',
+            label: `${i}`
+          });
+          beats.push({
+            beatNumber: '+',
+            type: 'up-strum',
+            strumMark: '⋀',
+            label: `+`
+          });
+        }
+      } else if (isBeat2Eighths) {
+        // 1, 2+, 3, 4 : V  V ⋀  V  V
+        beats.push({ beatNumber: '1', type: 'down-strum', strumMark: 'V', label: '1' });
+        beats.push({ beatNumber: '2', type: 'down-strum', strumMark: 'V', label: '2' });
+        beats.push({ beatNumber: '+', type: 'up-strum', strumMark: '⋀', label: '+' });
+        beats.push({ beatNumber: '3', type: 'down-strum', strumMark: 'V', label: '3' });
+        beats.push({ beatNumber: '4', type: 'down-strum', strumMark: 'V', label: '4' });
       } else {
-        // Standard down strums
+        // Standard down strums for 4/4, 3/4, etc.
         for (let i = 1; i <= beatsInBar; i++) {
           beats.push({
             beatNumber: i.toString(),

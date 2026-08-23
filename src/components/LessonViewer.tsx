@@ -17,6 +17,7 @@ import { InteractiveChordDiagram } from './InteractiveChordDiagram';
 import { InteractiveRhythmPlayer } from './InteractiveRhythmPlayer';
 import { ExerciseTrainer } from './ExerciseTrainer';
 import { OpenPositionNotesViewer } from './OpenPositionNotesViewer';
+import { StringNotesViewer } from './StringNotesViewer';
 
 interface LessonViewerProps {
   lesson: LessonData;
@@ -154,7 +155,8 @@ export const LessonViewer: React.FC<LessonViewerProps> = ({
         </div>
       </section>
 
-      {/* Dedicated Course Viewers (e.g. Lesson 11: Open Position Notes Summary & Note Values) */}
+      {/* Dedicated Course Viewers (e.g. String Notes for Lessons 4-9, Open Position for Lesson 11) */}
+      {[4, 5, 6, 7, 8, 9].includes(lesson.id) && <StringNotesViewer lessonId={lesson.id} />}
       {lesson.id === 11 && <OpenPositionNotesViewer />}
 
       {/* Lesson Chords (Interactive Visual Fretboards & Audio Strum) */}
