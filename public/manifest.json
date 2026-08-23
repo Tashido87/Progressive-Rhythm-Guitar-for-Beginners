@@ -1,0 +1,17 @@
+{
+  "name": "STRUMS & STRINGS — Progressive Rhythm Guitar",
+  "short_name": "Rhythm Guitar",
+  "description": "Progressive Rhythm Guitar Interactive Web Course",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#ea580c",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
