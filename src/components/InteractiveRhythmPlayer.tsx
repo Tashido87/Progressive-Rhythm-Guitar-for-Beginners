@@ -114,24 +114,26 @@ export const InteractiveRhythmPlayer: React.FC<InteractiveRhythmPlayerProps> = (
   const getSymbol = (beat: BeatMarker) => {
     switch (beat.type) {
       case 'down':
-        return '⨅'; // Down strum wedge
+        return 'V'; // Down strum
       case 'up':
-        return '⋁'; // Up strum wedge
+        return '⋀'; // Up strum (inverted V)
       case 'percussive-down':
       case 'percussive-up':
         return '✖'; // Chuk
       case 'dampened-down':
-        return '⨅ (D)';
+        return 'V (M)';
       case 'staccato-down':
-        return '⨅ (•)';
+        return 'V (•)';
       case 'bass-pick':
-        return `B(${beat.bassString || 6})`;
+        return beat.bassString ? `B(${beat.bassString})` : 'Bass';
       case 'air-down':
-        return '(⨅)';
+        return '(V)';
+      case 'air-up':
+        return '(⋀)';
       case 'rest':
         return '𝄽';
       default:
-        return '⨅';
+        return 'V';
     }
   };
 

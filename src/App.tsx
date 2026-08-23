@@ -165,7 +165,7 @@ export default function App() {
         )}
 
         {/* Lesson Viewport */}
-        <main className="flex-1 p-4 sm:p-6 lg:p-8">
+        <main className="flex-1 p-4 sm:p-6 lg:p-8 pb-24 lg:pb-12">
           <LessonViewer
             lesson={currentLesson}
             isCompleted={completedLessonIds.includes(currentLesson.id)}
@@ -176,6 +176,60 @@ export default function App() {
             hasNext={hasNext}
           />
         </main>
+
+        {/* Mobile Fixed Bottom Navigation Bar (Ultra-convenient on phones) */}
+        <nav className="lg:hidden fixed bottom-0 inset-x-0 z-30 bg-white/95 backdrop-blur-md border-t border-slate-200 px-3 py-2 flex items-center justify-around shadow-lg">
+          <button
+            onClick={() => setIsMobileMenuOpen(true)}
+            className="flex flex-col items-center gap-1 p-1.5 rounded-xl text-slate-700 hover:text-orange-600 cursor-pointer text-[10px] font-sans"
+          >
+            <BookOpen className="w-4 h-4 text-slate-600" />
+            <span className="font-myanmar font-medium">သင်ခန်းစာ</span>
+          </button>
+
+          <button
+            onClick={() => {
+              const el = document.getElementById('exercises-section');
+              if (el) {
+                el.scrollIntoView({ behavior: 'smooth' });
+              }
+            }}
+            className="flex flex-col items-center gap-1 p-1.5 rounded-xl text-slate-700 hover:text-orange-600 cursor-pointer text-[10px] font-sans"
+          >
+            <Trophy className="w-4 h-4 text-orange-600" />
+            <span className="font-myanmar font-medium">လေ့ကျင့်ခန်း</span>
+          </button>
+
+          <button
+            onClick={() => setIsDictionaryOpen(true)}
+            className="flex flex-col items-center gap-1 p-1.5 rounded-xl text-slate-700 hover:text-orange-600 cursor-pointer text-[10px] font-sans"
+          >
+            <Music className="w-4 h-4 text-slate-600" />
+            <span className="font-myanmar font-medium">လက်ကွက်</span>
+          </button>
+
+          <button
+            onClick={() => setActiveUtilityTool((curr) => (curr === 'tuner' ? 'none' : 'tuner'))}
+            className={`flex flex-col items-center gap-1 p-1.5 rounded-xl text-[10px] font-sans cursor-pointer ${
+              activeUtilityTool === 'tuner' ? 'text-orange-600 font-bold' : 'text-slate-700'
+            }`}
+          >
+            <Radio className="w-4 h-4" />
+            <span className="font-myanmar font-medium">အသံညှိ</span>
+          </button>
+
+          <button
+            onClick={() =>
+              setActiveUtilityTool((curr) => (curr === 'metronome' ? 'none' : 'metronome'))
+            }
+            className={`flex flex-col items-center gap-1 p-1.5 rounded-xl text-[10px] font-sans cursor-pointer ${
+              activeUtilityTool === 'metronome' ? 'text-orange-600 font-bold' : 'text-slate-700'
+            }`}
+          >
+            <Sliders className="w-4 h-4" />
+            <span className="font-myanmar font-medium">မက်ထရိုနုန်း</span>
+          </button>
+        </nav>
       </div>
 
       {/* Chord Dictionary Modal */}

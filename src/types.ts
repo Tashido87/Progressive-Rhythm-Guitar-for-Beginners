@@ -93,6 +93,22 @@ export interface ChordProgressionItem {
   subChords?: { chordName: string; beats: number }[];
 }
 
+export interface ScoreBeat {
+  beatNumber: string; // "1", "2", "3", "4", "+", "e", "a"
+  type: 'bass' | 'down-strum' | 'up-strum' | 'percussive' | 'rest' | 'single-note';
+  string?: number; // 1..6 (for bass note or single note)
+  fret?: number | string; // 0..15 or 'x'
+  staffPosition?: number; // 0 = middle C, 1 = D, etc. (for treble staff vertical notehead position)
+  strumMark?: 'V' | '^' | '⋀' | 'X' | 'rest' | string;
+  label?: string;
+}
+
+export interface ScoreBar {
+  barNumber: number;
+  chordName: string;
+  beats: ScoreBeat[];
+}
+
 export interface ExerciseData {
   id: string;
   title: string;
@@ -109,6 +125,11 @@ export interface ExerciseData {
     technique?: 'H' | 'P' | 'slide' | 'glide' | 'mute';
     label?: string;
   }[];
+  scoreNotation?: {
+    bars: ScoreBar[];
+    repeatEnd?: boolean;
+    cassetteLabel?: string;
+  };
   notesMy?: string;
   notesEn?: string;
 }

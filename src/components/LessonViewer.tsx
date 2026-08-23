@@ -207,14 +207,14 @@ export const LessonViewer: React.FC<LessonViewerProps> = ({
 
       {/* Interactive Exercises (Backing Trainer) */}
       {lesson.exercises && lesson.exercises.length > 0 && (
-        <section className="space-y-4">
+        <section id="exercises-section" className="space-y-4 scroll-mt-20">
           <div className="flex items-center gap-2.5">
             <div className="p-2 rounded-xl bg-orange-50 text-orange-600 border border-orange-100">
               <Trophy className="w-5 h-5" />
             </div>
             <div>
               <h3 className="text-lg font-bold text-slate-900">လေ့ကျင့်ခန်းများ (Interactive Exercises)</h3>
-              <p className="text-xs text-slate-500 font-myanmar">သီချင်းသံစဉ်တွဲ Backing Track ဖြင့် လက်တွေ့တီးခတ်ရန်</p>
+              <p className="text-xs text-slate-500 font-myanmar">ဂီတစာရွက် (Staff)၊ Guitar TAB နှင့် Backing Track ဖြင့် လက်တွေ့တီးခတ်ရန်</p>
             </div>
           </div>
 

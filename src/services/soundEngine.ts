@@ -236,6 +236,23 @@ class SoundEngine {
   }
 
   /**
+   * Play single note by specific guitar string (1..6) and fret (0..15)
+   */
+  public playNoteByStringFret(stringNum: number, fret: number | string, duration = 1.4) {
+    if (this.isMuted) return;
+    this.initContext();
+    if (!this.ctx) return;
+    if (fret === 'x' || fret === 'X' || fret === -1) {
+      this.playPercussiveChuk();
+      return;
+    }
+    const numFret = typeof fret === 'number' ? fret : parseInt(fret, 10);
+    if (isNaN(numFret) || numFret < 0) return;
+    const baseMidi = this.stringBaseMidi[stringNum] || 40;
+    this.playPluckedString(baseMidi + numFret, undefined, duration, false, false, 0.75);
+  }
+
+  /**
    * Play a full chord strum with down/up direction stagger
    * fretPositions: Array of frets for strings 6 down to 1. (-1 = muted/X, 0 = open, 1..n = fret)
    */

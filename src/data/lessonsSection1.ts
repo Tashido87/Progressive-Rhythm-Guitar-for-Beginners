@@ -780,17 +780,64 @@ export const SECTION_1_LESSONS: LessonData[] = [
       {
         id: 'ex_18',
         title: 'Exercise 18 - Bass Note Turnaround in C',
-        titleMy: 'လေ့ကျင့်ခန်း ၁၈ - Bass Note ပါဝင်သော Turnaround in C',
+        titleMy: 'လေ့ကျင့်ခန်း ၁၈ - Bass Note ပါဝင်သော Turnaround in C (C - Em - F - G)',
         exerciseNumber: 18,
         timeSignature: '4/4',
         recommendedBpm: 80,
+        rhythmPatternId: 'r_bass_pick_1',
         chords: [
           { chordName: 'C', bars: 1 },
           { chordName: 'Em', bars: 1 },
           { chordName: 'F', bars: 1 },
           { chordName: 'G', bars: 1 }
         ],
-        notesMy: 'Bass note တီးနေစဉ်တွင်လည်း လက်ဝဲဘက်မှ Chord တစ်ခုလုံးကို အပြည့် ဖိထားပေးရမည်။'
+        scoreNotation: {
+          cassetteLabel: 'EXERCISE 18',
+          repeatEnd: true,
+          bars: [
+            {
+              barNumber: 1,
+              chordName: 'C',
+              beats: [
+                { beatNumber: '1', type: 'bass', string: 5, fret: 3, staffPosition: 0, label: 'Bass C' },
+                { beatNumber: '2', type: 'down-strum', strumMark: 'V', label: 'Strum' },
+                { beatNumber: '3', type: 'down-strum', strumMark: 'V', label: 'Strum' },
+                { beatNumber: '4', type: 'bass', string: 5, fret: 3, staffPosition: 0, label: 'Bass C' }
+              ]
+            },
+            {
+              barNumber: 2,
+              chordName: 'Em',
+              beats: [
+                { beatNumber: '1', type: 'bass', string: 5, fret: 2, staffPosition: -2, label: 'Bass B/E' },
+                { beatNumber: '2', type: 'down-strum', strumMark: 'V', label: 'Strum' },
+                { beatNumber: '3', type: 'down-strum', strumMark: 'V', label: 'Strum' },
+                { beatNumber: '4', type: 'bass', string: 5, fret: 2, staffPosition: -2, label: 'Bass B/E' }
+              ]
+            },
+            {
+              barNumber: 3,
+              chordName: 'F',
+              beats: [
+                { beatNumber: '1', type: 'bass', string: 4, fret: 0, staffPosition: 1, label: 'Bass D/F' },
+                { beatNumber: '2', type: 'down-strum', strumMark: 'V', label: 'Strum' },
+                { beatNumber: '3', type: 'down-strum', strumMark: 'V', label: 'Strum' },
+                { beatNumber: '4', type: 'bass', string: 4, fret: 0, staffPosition: 1, label: 'Bass D/F' }
+              ]
+            },
+            {
+              barNumber: 4,
+              chordName: 'G',
+              beats: [
+                { beatNumber: '1', type: 'bass', string: 6, fret: 3, staffPosition: -3, label: 'Bass G' },
+                { beatNumber: '2', type: 'down-strum', strumMark: 'V', label: 'Strum' },
+                { beatNumber: '3', type: 'down-strum', strumMark: 'V', label: 'Strum' },
+                { beatNumber: '4', type: 'bass', string: 6, fret: 3, staffPosition: -3, label: 'Bass G' }
+              ]
+            }
+          ]
+        },
+        notesMy: 'စာအုပ်ပါ Exercise 18 အတိုင်း Beat 1 နှင့် 4 တွင် Bass ကြိုးကို သီးသန့်ခတ်ပြီး Beat 2 နှင့် 3 တွင် Strum ခတ်ပါ။ လက်ဝဲဘက်မှ Chord တစ်ခုလုံးကို အပြည့် ဖိထားပေးရမည်။'
       },
       {
         id: 'ex_19',
