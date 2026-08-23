@@ -1,0 +1,6 @@
+{
+  "name": "Progressive Rhythm Guitar Course",
+  "description": "Interactive, modern rhythm guitar learning application based on Progressive Rhythm Guitar with audio synthesizer, rhythm visualizer, interactive chords, progressions and music theory.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
