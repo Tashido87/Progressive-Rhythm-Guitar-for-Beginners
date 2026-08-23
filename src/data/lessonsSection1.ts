@@ -780,7 +780,7 @@ export const SECTION_1_LESSONS: LessonData[] = [
       {
         id: 'ex_18',
         title: 'Exercise 18 - Bass Note Turnaround in C',
-        titleMy: 'လေ့ကျင့်ခန်း ၁၈ - Bass Note ပါဝင်သော Turnaround in C (C - Em - F - G)',
+        titleMy: 'လေ့ကျင့်ခန်း ၁၈ - Bass Note Turnaround in C (C - Em - F - G)',
         exerciseNumber: 18,
         timeSignature: '4/4',
         recommendedBpm: 80,
@@ -799,40 +799,40 @@ export const SECTION_1_LESSONS: LessonData[] = [
               barNumber: 1,
               chordName: 'C',
               beats: [
-                { beatNumber: '1', type: 'bass', string: 5, fret: 3, staffPosition: 0, label: 'Bass C' },
+                { beatNumber: '1', type: 'bass', string: 5, fret: 3, label: 'Bass C' },
                 { beatNumber: '2', type: 'down-strum', strumMark: 'V', label: 'Strum' },
                 { beatNumber: '3', type: 'down-strum', strumMark: 'V', label: 'Strum' },
-                { beatNumber: '4', type: 'bass', string: 5, fret: 3, staffPosition: 0, label: 'Bass C' }
+                { beatNumber: '4', type: 'bass', string: 5, fret: 3, label: 'Bass C' }
               ]
             },
             {
               barNumber: 2,
               chordName: 'Em',
               beats: [
-                { beatNumber: '1', type: 'bass', string: 5, fret: 2, staffPosition: -2, label: 'Bass B/E' },
+                { beatNumber: '1', type: 'bass', string: 5, fret: 2, label: 'Bass B' },
                 { beatNumber: '2', type: 'down-strum', strumMark: 'V', label: 'Strum' },
                 { beatNumber: '3', type: 'down-strum', strumMark: 'V', label: 'Strum' },
-                { beatNumber: '4', type: 'bass', string: 5, fret: 2, staffPosition: -2, label: 'Bass B/E' }
+                { beatNumber: '4', type: 'bass', string: 5, fret: 2, label: 'Bass B' }
               ]
             },
             {
               barNumber: 3,
               chordName: 'F',
               beats: [
-                { beatNumber: '1', type: 'bass', string: 4, fret: 0, staffPosition: 1, label: 'Bass D/F' },
+                { beatNumber: '1', type: 'bass', string: 4, fret: 0, label: 'Bass D' },
                 { beatNumber: '2', type: 'down-strum', strumMark: 'V', label: 'Strum' },
                 { beatNumber: '3', type: 'down-strum', strumMark: 'V', label: 'Strum' },
-                { beatNumber: '4', type: 'bass', string: 4, fret: 0, staffPosition: 1, label: 'Bass D/F' }
+                { beatNumber: '4', type: 'bass', string: 4, fret: 0, label: 'Bass D' }
               ]
             },
             {
               barNumber: 4,
               chordName: 'G',
               beats: [
-                { beatNumber: '1', type: 'bass', string: 6, fret: 3, staffPosition: -3, label: 'Bass G' },
+                { beatNumber: '1', type: 'bass', string: 6, fret: 3, label: 'Bass G' },
                 { beatNumber: '2', type: 'down-strum', strumMark: 'V', label: 'Strum' },
                 { beatNumber: '3', type: 'down-strum', strumMark: 'V', label: 'Strum' },
-                { beatNumber: '4', type: 'bass', string: 6, fret: 3, staffPosition: -3, label: 'Bass G' }
+                { beatNumber: '4', type: 'bass', string: 6, fret: 3, label: 'Bass G' }
               ]
             }
           ]
@@ -846,6 +846,7 @@ export const SECTION_1_LESSONS: LessonData[] = [
         exerciseNumber: 19,
         timeSignature: '4/4',
         recommendedBpm: 85,
+        rhythmPatternId: 'r_country_alternating',
         chords: [
           { chordName: 'C', bars: 1 },
           { chordName: 'F', bars: 1 },
@@ -856,21 +857,125 @@ export const SECTION_1_LESSONS: LessonData[] = [
           { chordName: 'G7', bars: 1 },
           { chordName: 'C', bars: 1 }
         ],
-        notesMy: 'C တွင် ကြိုး ၅ နှင့် ၄၊ F တွင် ကြိုး ၄ နှင့် ၅၊ G7 တွင် ကြိုး ၆ နှင့် ၅ တို့ကို အလှည့်ကျ Bass ခတ်ပါ။'
+        scoreNotation: {
+          cassetteLabel: 'EXERCISE 19',
+          repeatEnd: true,
+          bars: [
+            {
+              barNumber: 1,
+              chordName: 'C',
+              beats: [
+                { beatNumber: '1', type: 'bass', string: 5, fret: 3, label: 'Bass C (5th string)' },
+                { beatNumber: '2', type: 'down-strum', strumMark: 'V', label: 'Strum' },
+                { beatNumber: '3', type: 'bass', string: 4, fret: 2, label: 'Bass E (4th string)' },
+                { beatNumber: '4', type: 'down-strum', strumMark: 'V', label: 'Strum' }
+              ]
+            },
+            {
+              barNumber: 2,
+              chordName: 'F',
+              beats: [
+                { beatNumber: '1', type: 'bass', string: 4, fret: 3, label: 'Bass F (4th string)' },
+                { beatNumber: '2', type: 'down-strum', strumMark: 'V', label: 'Strum' },
+                { beatNumber: '3', type: 'bass', string: 5, fret: 0, label: 'Bass A (5th string)' },
+                { beatNumber: '4', type: 'down-strum', strumMark: 'V', label: 'Strum' }
+              ]
+            },
+            {
+              barNumber: 3,
+              chordName: 'C',
+              beats: [
+                { beatNumber: '1', type: 'bass', string: 5, fret: 3, label: 'Bass C (5th string)' },
+                { beatNumber: '2', type: 'down-strum', strumMark: 'V', label: 'Strum' },
+                { beatNumber: '3', type: 'bass', string: 4, fret: 2, label: 'Bass E (4th string)' },
+                { beatNumber: '4', type: 'down-strum', strumMark: 'V', label: 'Strum' }
+              ]
+            },
+            {
+              barNumber: 4,
+              chordName: 'G7',
+              beats: [
+                { beatNumber: '1', type: 'bass', string: 6, fret: 3, label: 'Bass G (6th string)' },
+                { beatNumber: '2', type: 'down-strum', strumMark: 'V', label: 'Strum' },
+                { beatNumber: '3', type: 'bass', string: 5, fret: 2, label: 'Bass B (5th string)' },
+                { beatNumber: '4', type: 'down-strum', strumMark: 'V', label: 'Strum' }
+              ]
+            },
+            {
+              barNumber: 5,
+              chordName: 'C',
+              beats: [
+                { beatNumber: '1', type: 'bass', string: 5, fret: 3, label: 'Bass C (5th string)' },
+                { beatNumber: '2', type: 'down-strum', strumMark: 'V', label: 'Strum' },
+                { beatNumber: '3', type: 'bass', string: 4, fret: 2, label: 'Bass E (4th string)' },
+                { beatNumber: '4', type: 'down-strum', strumMark: 'V', label: 'Strum' }
+              ]
+            },
+            {
+              barNumber: 6,
+              chordName: 'F',
+              beats: [
+                { beatNumber: '1', type: 'bass', string: 4, fret: 3, label: 'Bass F (4th string)' },
+                { beatNumber: '2', type: 'down-strum', strumMark: 'V', label: 'Strum' },
+                { beatNumber: '3', type: 'bass', string: 5, fret: 0, label: 'Bass A (5th string)' },
+                { beatNumber: '4', type: 'down-strum', strumMark: 'V', label: 'Strum' }
+              ]
+            },
+            {
+              barNumber: 7,
+              chordName: 'G7',
+              beats: [
+                { beatNumber: '1', type: 'bass', string: 6, fret: 3, label: 'Bass G (6th string)' },
+                { beatNumber: '2', type: 'down-strum', strumMark: 'V', label: 'Strum' },
+                { beatNumber: '3', type: 'bass', string: 5, fret: 2, label: 'Bass B (5th string)' },
+                { beatNumber: '4', type: 'down-strum', strumMark: 'V', label: 'Strum' }
+              ]
+            },
+            {
+              barNumber: 8,
+              chordName: 'C',
+              beats: [
+                { beatNumber: '1', type: 'bass', string: 5, fret: 3, label: 'Bass C (5th string)' },
+                { beatNumber: '2', type: 'down-strum', strumMark: 'V', label: 'Strum' },
+                { beatNumber: '3', type: 'down-strum', strumMark: 'V', label: 'Strum' },
+                { beatNumber: '4', type: 'down-strum', strumMark: 'V', label: 'Strum' }
+              ]
+            }
+          ]
+        },
+        notesMy: 'စာအုပ်ပါ Exercise 19 အတိုင်း Beat 1 နှင့် 3 တွင် ကြိုး ၂ ချောင်း အလှည့်ကျ Bass ခတ်ပြီး Beat 2 နှင့် 4 တွင် Down Strum (V) ခတ်ပါ။ ၈ ခုမြောက် Bar (အဆုံး Bar) တွင် Bass ၁ ချက်နှင့် Strum ၃ ချက်ခတ်ပါ။'
       }
     ],
     techniques: [
       {
+        nameEn: 'Bass Note Picking Method',
+        nameMy: 'Bass Note Picking (ဘေ့စ်ကြိုးသီးသန့်ခတ်နည်း)',
+        explanationMy: 'Bass note picking involves a single bass note followed by strumming a chord. Bass notes are generally regarded as being notes on the fourth, fifth or sixth strings.',
+        proTipMy: 'Even when the single bass note is played, the full chord is held in preparation for the strums to follow; e.g. in the first bar hold a C chord for all four counts.'
+      },
+      {
         nameEn: 'Alternating Bass Technique',
         nameMy: 'Alternating Bass (အလှည့်ကျ Bass ခတ်နည်း)',
-        explanationMy: 'Country, Folk နှင့် Acoustic သီချင်းများတွင် Root Bass Note နှင့် 5th Bass Note ကို အလှည့်ကျ ခတ်ပေးခြင်းဖြင့် စည်းချက် ပိုမိုမြူးကြွလာစေသည်။',
+        explanationMy: 'Country, Folk နှင့် Acoustic သီချင်းများတွင် Root Bass Note နှင့် 5th/3rd Bass Note ကို အလှည့်ကျ ခတ်ပေးခြင်းဖြင့် စည်းချက် ပိုမိုမြူးကြွလာစေသည်။',
         proTipMy: 'Bass ခတ်သည့် အချက်တွင် အသံကြည်လင်ပြီး လေးနက်စေရန် ပစ်ခ်ဖြင့် တိကျစွာ ခတ်ပါ။'
       }
     ],
     troubleshooting: [
       {
-        issueMy: 'Bass ကြိုးခတ်ရာတွင် ဘေးနားရှိ အခြားကြိုးများကို မတော်တဆ ထိမိခြင်း',
-        fixMy: 'လက်ယာလက်ကောက်ဝတ်ကို ဂစ်တာဘော်ဒီအပေါ်တွင် အသာထောက်ထားပြီး ပစ်ခ်လှုပ်ရှားမှုကို သေးငယ်တိကျစေပါ။'
+        issueMy: '1. Fingers on their tips',
+        fixMy: 'This is particularly important in bass note picking styles so that open bass strings and neighboring strings vibrate freely without buzzing.'
+      },
+      {
+        issueMy: '2. Continual revision of all notes and chords',
+        fixMy: 'At least once a week you should go back through all the lessons to maintain finger memory and clean note recognition.'
+      },
+      {
+        issueMy: '3. Watch timing and tap your foot with the beat',
+        fixMy: 'For both chord and note work, keep a steady tempo by tapping your foot on every count (1, 2, 3, 4).'
+      },
+      {
+        issueMy: '4. Finish chord progressions on a single strum',
+        fixMy: 'Finish chord progressions on a single strum of the opening chord (this will apply in most situations).'
       }
     ]
   },

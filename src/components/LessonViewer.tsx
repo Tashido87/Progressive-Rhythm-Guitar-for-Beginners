@@ -16,6 +16,7 @@ import { CHORDS_DICTIONARY } from '../data/chordsData';
 import { InteractiveChordDiagram } from './InteractiveChordDiagram';
 import { InteractiveRhythmPlayer } from './InteractiveRhythmPlayer';
 import { ExerciseTrainer } from './ExerciseTrainer';
+import { OpenPositionNotesViewer } from './OpenPositionNotesViewer';
 
 interface LessonViewerProps {
   lesson: LessonData;
@@ -83,7 +84,7 @@ export const LessonViewer: React.FC<LessonViewerProps> = ({
               }`}
             >
               <CheckCircle2 className="w-4 h-4" />
-              <span>{isCompleted ? 'Completed (ပြီးမြောက်ပြီ)' : 'Mark as Completed (ပြီးပြီဟု မှတ်မည်)'}</span>
+              <span>{isCompleted ? 'Completed' : 'Mark as completed'}</span>
             </button>
           </div>
         </div>
@@ -152,6 +153,9 @@ export const LessonViewer: React.FC<LessonViewerProps> = ({
           ))}
         </div>
       </section>
+
+      {/* Dedicated Course Viewers (e.g. Lesson 11: Open Position Notes Summary & Note Values) */}
+      {lesson.id === 11 && <OpenPositionNotesViewer />}
 
       {/* Lesson Chords (Interactive Visual Fretboards & Audio Strum) */}
       {lessonChords.length > 0 && (
@@ -321,7 +325,7 @@ export const LessonViewer: React.FC<LessonViewerProps> = ({
           }`}
         >
           <CheckCircle2 className="w-5 h-5" />
-          <span>{isCompleted ? 'Lesson Completed ✓' : 'Mark Lesson as Completed (အခန်းပြီးပြီ)'}</span>
+          <span>{isCompleted ? 'Completed' : 'Mark as completed'}</span>
         </button>
 
         <button

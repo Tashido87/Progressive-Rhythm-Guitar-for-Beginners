@@ -41,13 +41,30 @@ export const ExerciseTrainer: React.FC<ExerciseTrainerProps> = ({ exercise }) =>
     exercise.titleMy.includes('Bass');
 
   const playChordBeat = useCallback(
-    (chordItem: ChordProgressionItem, beatNum: number) => {
+    (chordItem: ChordProgressionItem, beatNum: number, barIdx: number) => {
       const isFirstBeat = beatNum === 0;
       soundEngine.playMetronomeClick(isFirstBeat);
 
       const chordDef = getChordDef(chordItem.chordName);
 
-      // Check if this is a Bass Picking rhythm (like Exercise 18 from the user request)
+      // 1. If explicit score notation beats exist, execute exact note/strum from sheet music
+      if (exercise.scoreNotation && exercise.scoreNotation.bars && exercise.scoreNotation.bars[barIdx]) {
+        const barDef = exercise.scoreNotation.bars[barIdx];
+        const scoreBeat = barDef.beats?.[beatNum];
+        if (scoreBeat) {
+          if (scoreBeat.type === 'bass' || (scoreBeat.string && scoreBeat.fret !== undefined)) {
+            soundEngine.playNoteByStringFret(scoreBeat.string, scoreBeat.fret, 1.2);
+            return;
+          } else if (scoreBeat.type === 'down-strum' || scoreBeat.type === 'up-strum') {
+            soundEngine.playChord(chordDef, scoreBeat.type === 'up-strum' ? 'up' : 'down', bpm);
+            return;
+          } else if (scoreBeat.type === 'rest') {
+            return;
+          }
+        }
+      }
+
+      // 2. Check if this is a Bass Picking rhythm (like Exercise 18 from the user request)
       if (isBassStrumExercise) {
         if (beatNum === 0 || beatNum === 3) {
           // Beat 1 and Beat 4 are Bass plucks
@@ -60,7 +77,7 @@ export const ExerciseTrainer: React.FC<ExerciseTrainerProps> = ({ exercise }) =>
         return;
       }
 
-      // Check if there are sub-chords in this bar (e.g. passing chords)
+      // 3. Check if there are sub-chords in this bar (e.g. passing chords)
       if (chordItem.subChords && chordItem.subChords.length > 0) {
         let accumulatedBeats = 0;
         let targetSubChord = chordItem.subChords[0];
@@ -78,7 +95,7 @@ export const ExerciseTrainer: React.FC<ExerciseTrainerProps> = ({ exercise }) =>
         soundEngine.playChord(chordDef, 'down', bpm);
       }
     },
-    [bpm, isBassStrumExercise]
+    [bpm, isBassStrumExercise, exercise.scoreNotation]
   );
 
   const tick = useCallback(() => {
@@ -88,7 +105,7 @@ export const ExerciseTrainer: React.FC<ExerciseTrainerProps> = ({ exercise }) =>
     setCurrentBarIndex(barIndexRef.current);
     setCurrentBeatInBar(beatInBarRef.current);
 
-    playChordBeat(currentChordItem, beatInBarRef.current);
+    playChordBeat(currentChordItem, beatInBarRef.current, barIndexRef.current);
 
     const beatIntervalMs = (60 / bpm) * 1000;
 
