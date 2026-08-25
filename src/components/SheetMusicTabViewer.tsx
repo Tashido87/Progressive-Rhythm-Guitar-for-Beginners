@@ -361,11 +361,35 @@ export const SheetMusicTabViewer: React.FC<SheetMusicTabViewerProps> = ({
     }
   };
 
+  // Layout: Group bars into systems (rows) of up to 4 bars each (Method Book style)
+  const BARS_PER_SYSTEM = 4;
+  interface SystemData {
+    systemIndex: number;
+    bars: {
+      bar: ScoreBar;
+      globalBarIdx: number;
+    }[];
+  }
+
+  const systems: SystemData[] = [];
+  for (let i = 0; i < bars.length; i += BARS_PER_SYSTEM) {
+    const chunk = bars.slice(i, i + BARS_PER_SYSTEM).map((bar, idx) => ({
+      bar,
+      globalBarIdx: i + idx
+    }));
+    systems.push({
+      systemIndex: Math.floor(i / BARS_PER_SYSTEM),
+      bars: chunk
+    });
+  }
+
   // Dimensions for SVG score rendering
   const barWidth = 150; // width in px per measure
   const headerLeftWidth = 60; // width for clef & time signature
-  const totalSvgWidth = headerLeftWidth + bars.length * barWidth + 30;
-  const svgHeight = 245;
+  const maxBarsInRow = Math.min(bars.length, BARS_PER_SYSTEM);
+  const totalSvgWidth = headerLeftWidth + maxBarsInRow * barWidth + 30;
+  const SYSTEM_HEIGHT = 265;
+  const totalSvgHeight = systems.length * SYSTEM_HEIGHT;
 
   return (
     <div className="w-full bg-[#fcfbf9] border-2 border-slate-300 rounded-3xl p-4 sm:p-6 shadow-sm font-sans select-none overflow-hidden transition-all">
@@ -380,7 +404,7 @@ export const SheetMusicTabViewer: React.FC<SheetMusicTabViewerProps> = ({
               Standard Notation & Guitar TAB Score
             </h4>
             <p className="text-[11px] text-slate-500 font-myanmar">
-              စာအုပ်ပါ မူရင်းအတိုင်း Standard Staff (၅ ကြောင်း) နှင့် Guitar TAB (၆ ကြောင်း)
+              စာအုပ်ပါ မူရင်းအတိုင်း Standard Staff (၅ ကြောင်း) နှင့် Guitar TAB (၆ ကြောင်း) {systems.length > 1 && `• ${bars.length} Bars (${systems.length} Systems)`}
             </p>
           </div>
         </div>
@@ -399,390 +423,421 @@ export const SheetMusicTabViewer: React.FC<SheetMusicTabViewerProps> = ({
         <div className="min-w-max bg-white border border-slate-300 rounded-2xl p-3 sm:p-4 relative shadow-inner">
           <svg
             width={totalSvgWidth}
-            height={svgHeight}
+            height={totalSvgHeight}
             className="overflow-visible block"
             style={{ minWidth: `${totalSvgWidth}px` }}
           >
-            {/* 1. Global Continuous Staff Lines (5 lines: y = 24, 36, 48, 60, 72) */}
-            <g id="staff-lines" stroke="#0f172a" strokeWidth="1.2">
-              <line x1={15} y1={24} x2={totalSvgWidth - 15} y2={24} />
-              <line x1={15} y1={36} x2={totalSvgWidth - 15} y2={36} />
-              <line x1={15} y1={48} x2={totalSvgWidth - 15} y2={48} />
-              <line x1={15} y1={60} x2={totalSvgWidth - 15} y2={60} />
-              <line x1={15} y1={72} x2={totalSvgWidth - 15} y2={72} />
-            </g>
-
-            {/* 2. Global Continuous TAB Lines (6 lines: y = 150, 161, 172, 183, 194, 205) */}
-            <g id="tab-lines" stroke="#475569" strokeWidth="1">
-              <line x1={15} y1={150} x2={totalSvgWidth - 15} y2={150} />
-              <line x1={15} y1={161} x2={totalSvgWidth - 15} y2={161} />
-              <line x1={15} y1={172} x2={totalSvgWidth - 15} y2={172} />
-              <line x1={15} y1={183} x2={totalSvgWidth - 15} y2={183} />
-              <line x1={15} y1={194} x2={totalSvgWidth - 15} y2={194} />
-              <line x1={15} y1={205} x2={totalSvgWidth - 15} y2={205} />
-            </g>
-
-            {/* 3. Clef, Time Signature & TAB Title */}
-            <g id="score-header-symbols">
-              {/* Treble Clef Symbol */}
-              <text
-                x={20}
-                y={68}
-                fontSize="46"
-                fontFamily="serif"
-                fill="#0f172a"
-                className="select-none"
-              >
-                𝄞
-              </text>
-
-              {/* Time Signature (4/4) */}
-              <text
-                x={48}
-                y={46}
-                fontSize="16"
-                fontWeight="900"
-                fontFamily="monospace"
-                fill="#0f172a"
-                textAnchor="middle"
-              >
-                {timeSig.split('/')[0]}
-              </text>
-              <text
-                x={48}
-                y={66}
-                fontSize="16"
-                fontWeight="900"
-                fontFamily="monospace"
-                fill="#0f172a"
-                textAnchor="middle"
-              >
-                {timeSig.split('/')[1] || '4'}
-              </text>
-
-              {/* T - A - B Vertical Header */}
-              <text
-                x={26}
-                y={160}
-                fontSize="12"
-                fontWeight="900"
-                fontFamily="monospace"
-                fill="#0f172a"
-                textAnchor="middle"
-              >
-                T
-              </text>
-              <text
-                x={26}
-                y={180}
-                fontSize="12"
-                fontWeight="900"
-                fontFamily="monospace"
-                fill="#0f172a"
-                textAnchor="middle"
-              >
-                A
-              </text>
-              <text
-                x={26}
-                y={200}
-                fontSize="12"
-                fontWeight="900"
-                fontFamily="monospace"
-                fill="#0f172a"
-                textAnchor="middle"
-              >
-                B
-              </text>
-
-              {/* COUNT label in count row */}
-              <text
-                x={26}
-                y={232}
-                fontSize="10"
-                fontWeight="bold"
-                fontFamily="monospace"
-                fill="#64748b"
-                textAnchor="middle"
-              >
-                COUNT
-              </text>
-            </g>
-
-            {/* 4. Measures (Bars) with Chord Names, Notes, Strum marks, TAB Numbers */}
-            {bars.map((bar, barIdx) => {
-              const startX = headerLeftWidth + barIdx * barWidth;
-              const isBarActive = isPlaying && activeBarIndex === barIdx;
-              const beatsCount = bar.beats.length;
-              const beatSpacing = barWidth / (beatsCount || 4);
+            {systems.map((sys) => {
+              const offsetY = sys.systemIndex * SYSTEM_HEIGHT;
+              const sysBarCount = sys.bars.length;
+              const sysContentWidth = headerLeftWidth + sysBarCount * barWidth;
 
               return (
-                <g
-                  key={`bar-${bar.barNumber}-${barIdx}`}
-                  onClick={() => onBarClick && onBarClick(barIdx)}
-                  className="cursor-pointer"
-                >
-                  {/* Active Bar Highlight Backdrop */}
-                  {isBarActive && (
-                    <rect
-                      x={startX}
-                      y={10}
-                      width={barWidth}
-                      height={230}
-                      fill="#ea580c"
-                      fillOpacity="0.08"
-                      rx="8"
+                <g key={`system-${sys.systemIndex}`}>
+                  {/* System row background divider if multiple rows */}
+                  {sys.systemIndex > 0 && (
+                    <line
+                      x1={15}
+                      y1={offsetY - 20}
+                      x2={totalSvgWidth - 15}
+                      y2={offsetY - 20}
+                      stroke="#e2e8f0"
+                      strokeWidth="1"
+                      strokeDasharray="4 4"
                     />
                   )}
 
-                  {/* Chord Name Header above Staff */}
-                  <g>
-                    <rect
-                      x={startX + barWidth / 2 - 20}
-                      y={0}
-                      width={40}
-                      height={18}
-                      rx="4"
-                      fill={isBarActive ? '#ea580c' : '#f1f5f9'}
-                    />
+                  {/* 1. Continuous Staff Lines (5 lines: y = offsetY + 24, 36, 48, 60, 72) */}
+                  <g id={`staff-lines-${sys.systemIndex}`} stroke="#0f172a" strokeWidth="1.2">
+                    <line x1={15} y1={offsetY + 24} x2={sysContentWidth} y2={offsetY + 24} />
+                    <line x1={15} y1={offsetY + 36} x2={sysContentWidth} y2={offsetY + 36} />
+                    <line x1={15} y1={offsetY + 48} x2={sysContentWidth} y2={offsetY + 48} />
+                    <line x1={15} y1={offsetY + 60} x2={sysContentWidth} y2={offsetY + 60} />
+                    <line x1={15} y1={offsetY + 72} x2={sysContentWidth} y2={offsetY + 72} />
+                  </g>
+
+                  {/* 2. Continuous TAB Lines (6 lines: y = offsetY + 150, 161, 172, 183, 194, 205) */}
+                  <g id={`tab-lines-${sys.systemIndex}`} stroke="#475569" strokeWidth="1">
+                    <line x1={15} y1={offsetY + 150} x2={sysContentWidth} y2={offsetY + 150} />
+                    <line x1={15} y1={offsetY + 161} x2={sysContentWidth} y2={offsetY + 161} />
+                    <line x1={15} y1={offsetY + 172} x2={sysContentWidth} y2={offsetY + 172} />
+                    <line x1={15} y1={offsetY + 183} x2={sysContentWidth} y2={offsetY + 183} />
+                    <line x1={15} y1={offsetY + 194} x2={sysContentWidth} y2={offsetY + 194} />
+                    <line x1={15} y1={offsetY + 205} x2={sysContentWidth} y2={offsetY + 205} />
+                  </g>
+
+                  {/* 3. Clef, Time Signature & TAB Title */}
+                  <g id={`score-header-symbols-${sys.systemIndex}`}>
+                    {/* Treble Clef Symbol */}
                     <text
-                      x={startX + barWidth / 2}
-                      y={13}
-                      fontSize="14"
+                      x={20}
+                      y={offsetY + 68}
+                      fontSize="46"
+                      fontFamily="serif"
+                      fill="#0f172a"
+                      className="select-none"
+                    >
+                      𝄞
+                    </text>
+
+                    {/* Time Signature on System 0 (or first row) */}
+                    {sys.systemIndex === 0 && (
+                      <>
+                        <text
+                          x={48}
+                          y={offsetY + 46}
+                          fontSize="16"
+                          fontWeight="900"
+                          fontFamily="monospace"
+                          fill="#0f172a"
+                          textAnchor="middle"
+                        >
+                          {timeSig.split('/')[0]}
+                        </text>
+                        <text
+                          x={48}
+                          y={offsetY + 66}
+                          fontSize="16"
+                          fontWeight="900"
+                          fontFamily="monospace"
+                          fill="#0f172a"
+                          textAnchor="middle"
+                        >
+                          {timeSig.split('/')[1] || '4'}
+                        </text>
+                      </>
+                    )}
+
+                    {/* T - A - B Vertical Header */}
+                    <text
+                      x={26}
+                      y={offsetY + 160}
+                      fontSize="12"
                       fontWeight="900"
                       fontFamily="monospace"
-                      fill={isBarActive ? '#ffffff' : '#0f172a'}
+                      fill="#0f172a"
                       textAnchor="middle"
                     >
-                      {bar.chordName}
+                      T
+                    </text>
+                    <text
+                      x={26}
+                      y={offsetY + 180}
+                      fontSize="12"
+                      fontWeight="900"
+                      fontFamily="monospace"
+                      fill="#0f172a"
+                      textAnchor="middle"
+                    >
+                      A
+                    </text>
+                    <text
+                      x={26}
+                      y={offsetY + 200}
+                      fontSize="12"
+                      fontWeight="900"
+                      fontFamily="monospace"
+                      fill="#0f172a"
+                      textAnchor="middle"
+                    >
+                      B
+                    </text>
+
+                    {/* COUNT label in count row */}
+                    <text
+                      x={26}
+                      y={offsetY + 232}
+                      fontSize="10"
+                      fontWeight="bold"
+                      fontFamily="monospace"
+                      fill="#64748b"
+                      textAnchor="middle"
+                    >
+                      COUNT
                     </text>
                   </g>
 
-                  {/* Measure Initial Barline */}
-                  {barIdx === 0 && (
-                    <g stroke="#0f172a" strokeWidth="1.5">
-                      <line x1={startX} y1={24} x2={startX} y2={72} />
-                      <line x1={startX} y1={150} x2={startX} y2={205} />
-                    </g>
-                  )}
+                  {/* Initial Barline for System */}
+                  <g stroke="#0f172a" strokeWidth="1.5">
+                    <line x1={headerLeftWidth} y1={offsetY + 24} x2={headerLeftWidth} y2={offsetY + 72} />
+                    <line x1={headerLeftWidth} y1={offsetY + 150} x2={headerLeftWidth} y2={offsetY + 205} />
+                  </g>
 
-                  {/* Beats in this Bar */}
-                  {bar.beats.map((beat, beatIdx) => {
-                    const beatX = startX + (beatIdx + 0.5) * beatSpacing;
-                    const isBeatActive = isBarActive && activeBeatIndex === beatIdx;
-
-                    const isBassOrSingle = beat.type === 'bass' || beat.type === 'single-note';
-                    const stringNum = beat.string || 5;
-                    const fretNum = beat.fret !== undefined ? beat.fret : 0;
-                    const noteInfo = getGuitarNoteEngraving(stringNum, fretNum);
+                  {/* 4. Measures (Bars) in this System */}
+                  {sys.bars.map(({ bar, globalBarIdx }, localBarIdx) => {
+                    const startX = headerLeftWidth + localBarIdx * barWidth;
+                    const isBarActive = isPlaying && activeBarIndex === globalBarIdx;
+                    const beatsCount = bar.beats.length;
+                    const beatSpacing = barWidth / (beatsCount || 4);
+                    const isLastBarOfEntireExercise = globalBarIdx === bars.length - 1;
+                    const isLastBarOfThisSystem = localBarIdx === sys.bars.length - 1;
 
                     return (
                       <g
-                        key={`bar-${barIdx}-beat-${beatIdx}`}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleBeatInteraction(barIdx, beatIdx, beat, bar.chordName);
-                        }}
-                        className="hover:opacity-80 transition-opacity"
+                        key={`bar-${bar.barNumber}-${globalBarIdx}`}
+                        onClick={() => onBarClick && onBarClick(globalBarIdx)}
+                        className="cursor-pointer"
                       >
-                        {/* Active Beat Subtle Vertical Beam */}
-                        {isBeatActive && (
+                        {/* Active Bar Highlight Backdrop */}
+                        {isBarActive && (
                           <rect
-                            x={beatX - 14}
-                            y={14}
-                            width={28}
-                            height={222}
+                            x={startX}
+                            y={offsetY + 10}
+                            width={barWidth}
+                            height={230}
                             fill="#ea580c"
-                            fillOpacity="0.15"
-                            rx="6"
+                            fillOpacity="0.08"
+                            rx="8"
                           />
                         )}
 
-                        {/* --- STAFF RENDERING --- */}
-                        {isBassOrSingle ? (
-                          <g id="staff-notehead-stem">
-                            {/* Horizontal Ledger lines if note is below or above staff */}
-                            {noteInfo.ledgerLines.map((ledgerY, lIdx) => (
-                              <line
-                                key={`ledger-${lIdx}`}
-                                x1={beatX - 9}
-                                y1={ledgerY}
-                                x2={beatX + 9}
-                                y2={ledgerY}
-                                stroke={isBeatActive ? '#ea580c' : '#0f172a'}
-                                strokeWidth="1.5"
-                              />
-                            ))}
+                        {/* Chord Name Header above Staff */}
+                        <g>
+                          <rect
+                            x={startX + barWidth / 2 - 22}
+                            y={offsetY}
+                            width={44}
+                            height={18}
+                            rx="4"
+                            fill={isBarActive ? '#ea580c' : '#f1f5f9'}
+                          />
+                          <text
+                            x={startX + barWidth / 2}
+                            y={offsetY + 13}
+                            fontSize="14"
+                            fontWeight="900"
+                            fontFamily="monospace"
+                            fill={isBarActive ? '#ffffff' : '#0f172a'}
+                            textAnchor="middle"
+                          >
+                            {bar.chordName}
+                          </text>
+                        </g>
 
-                            {/* Solid Notehead (rotated oval) */}
-                            <ellipse
-                              cx={beatX}
-                              cy={noteInfo.staffY}
-                              rx="5.5"
-                              ry="4"
-                              transform={`rotate(-20 ${beatX} ${noteInfo.staffY})`}
-                              fill={isBeatActive ? '#ea580c' : '#0f172a'}
-                            />
+                        {/* Beats in this Bar */}
+                        {bar.beats.map((beat, beatIdx) => {
+                          const beatX = startX + (beatIdx + 0.5) * beatSpacing;
+                          const isBeatActive = isBarActive && activeBeatIndex === beatIdx;
 
-                            {/* Vertical Stem */}
-                            {noteInfo.stemDirection === 'up' ? (
-                              <line
-                                x1={beatX + 4.8}
-                                y1={noteInfo.staffY}
-                                x2={beatX + 4.8}
-                                y2={Math.min(noteInfo.staffY - 32, 48)}
-                                stroke={isBeatActive ? '#ea580c' : '#0f172a'}
-                                strokeWidth="1.6"
-                                strokeLinecap="round"
-                              />
-                            ) : (
-                              <line
-                                x1={beatX - 4.8}
-                                y1={noteInfo.staffY}
-                                x2={beatX - 4.8}
-                                y2={Math.max(noteInfo.staffY + 32, 54)}
-                                stroke={isBeatActive ? '#ea580c' : '#0f172a'}
-                                strokeWidth="1.6"
-                                strokeLinecap="round"
-                              />
-                            )}
+                          const isBassOrSingle = beat.type === 'bass' || beat.type === 'single-note';
+                          const stringNum = beat.string || 5;
+                          const fretNum = beat.fret !== undefined ? beat.fret : 0;
+                          const noteInfo = getGuitarNoteEngraving(stringNum, fretNum);
+
+                          return (
+                            <g
+                              key={`bar-${globalBarIdx}-beat-${beatIdx}`}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleBeatInteraction(globalBarIdx, beatIdx, beat, bar.chordName);
+                              }}
+                              className="hover:opacity-80 transition-opacity"
+                            >
+                              {/* Active Beat Subtle Vertical Beam */}
+                              {isBeatActive && (
+                                <rect
+                                  x={beatX - 14}
+                                  y={offsetY + 14}
+                                  width={28}
+                                  height={222}
+                                  fill="#ea580c"
+                                  fillOpacity="0.15"
+                                  rx="6"
+                                />
+                              )}
+
+                              {/* --- STAFF RENDERING --- */}
+                              {isBassOrSingle ? (
+                                <g id="staff-notehead-stem">
+                                  {/* Horizontal Ledger lines */}
+                                  {noteInfo.ledgerLines.map((ledgerY, lIdx) => (
+                                    <line
+                                      key={`ledger-${lIdx}`}
+                                      x1={beatX - 9}
+                                      y1={offsetY + ledgerY}
+                                      x2={beatX + 9}
+                                      y2={offsetY + ledgerY}
+                                      stroke={isBeatActive ? '#ea580c' : '#0f172a'}
+                                      strokeWidth="1.5"
+                                    />
+                                  ))}
+
+                                  {/* Solid Notehead */}
+                                  <ellipse
+                                    cx={beatX}
+                                    cy={offsetY + noteInfo.staffY}
+                                    rx="5.5"
+                                    ry="4"
+                                    transform={`rotate(-20 ${beatX} ${offsetY + noteInfo.staffY})`}
+                                    fill={isBeatActive ? '#ea580c' : '#0f172a'}
+                                  />
+
+                                  {/* Vertical Stem */}
+                                  {noteInfo.stemDirection === 'up' ? (
+                                    <line
+                                      x1={beatX + 4.8}
+                                      y1={offsetY + noteInfo.staffY}
+                                      x2={beatX + 4.8}
+                                      y2={Math.min(offsetY + noteInfo.staffY - 32, offsetY + 48)}
+                                      stroke={isBeatActive ? '#ea580c' : '#0f172a'}
+                                      strokeWidth="1.6"
+                                      strokeLinecap="round"
+                                    />
+                                  ) : (
+                                    <line
+                                      x1={beatX - 4.8}
+                                      y1={offsetY + noteInfo.staffY}
+                                      x2={beatX - 4.8}
+                                      y2={Math.max(offsetY + noteInfo.staffY + 32, offsetY + 54)}
+                                      stroke={isBeatActive ? '#ea580c' : '#0f172a'}
+                                      strokeWidth="1.6"
+                                      strokeLinecap="round"
+                                    />
+                                  )}
+                                </g>
+                              ) : (
+                                /* Down Strum (V) or Up Strum (⋀) on Staff */
+                                <g id="staff-strum-mark">
+                                  <text
+                                    x={beatX}
+                                    y={offsetY + 54}
+                                    fontSize="17"
+                                    fontWeight="900"
+                                    fontFamily="monospace, serif"
+                                    fill={isBeatActive ? '#ea580c' : '#0f172a'}
+                                    textAnchor="middle"
+                                  >
+                                    {beat.strumMark === '^' || beat.strumMark === '⋀' || beat.type === 'up-strum'
+                                      ? '⋀'
+                                      : 'V'}
+                                  </text>
+                                </g>
+                              )}
+
+                              {/* --- TAB RENDERING --- */}
+                              {isBassOrSingle ? (
+                                <g id="tab-fret-number">
+                                  <rect
+                                    x={beatX - 7}
+                                    y={offsetY + noteInfo.tabStringY - 7}
+                                    width={14}
+                                    height={14}
+                                    fill="white"
+                                  />
+                                  <text
+                                    x={beatX}
+                                    y={offsetY + noteInfo.tabStringY + 4.5}
+                                    fontSize="13"
+                                    fontWeight="900"
+                                    fontFamily="monospace"
+                                    fill={isBeatActive ? '#ea580c' : '#0f172a'}
+                                    textAnchor="middle"
+                                  >
+                                    {beat.fret !== undefined ? beat.fret : '0'}
+                                  </text>
+                                </g>
+                              ) : (
+                                <g id="tab-strum-mark">
+                                  <rect
+                                    x={beatX - 8}
+                                    y={offsetY + 170}
+                                    width={16}
+                                    height={16}
+                                    fill="white"
+                                  />
+                                  <text
+                                    x={beatX}
+                                    y={offsetY + 183}
+                                    fontSize="15"
+                                    fontWeight="900"
+                                    fontFamily="monospace, serif"
+                                    fill={isBeatActive ? '#ea580c' : '#0f172a'}
+                                    textAnchor="middle"
+                                  >
+                                    {beat.strumMark === '^' || beat.strumMark === '⋀' || beat.type === 'up-strum'
+                                      ? '⋀'
+                                      : 'V'}
+                                  </text>
+                                </g>
+                              )}
+
+                              {/* --- COUNT DIGIT (1, 2, 3, 4) --- */}
+                              <text
+                                x={beatX}
+                                y={offsetY + 232}
+                                fontSize="12"
+                                fontWeight={isBeatActive ? '900' : 'bold'}
+                                fontFamily="monospace"
+                                fill={isBeatActive ? '#ea580c' : '#475569'}
+                                textAnchor="middle"
+                              >
+                                {beat.beatNumber}
+                              </text>
+                            </g>
+                          );
+                        })}
+
+                        {/* Measure Dividing Barline / System Ending / Final Repeat Barline */}
+                        {!isLastBarOfThisSystem ? (
+                          /* Regular dividing barline between measures in the same system */
+                          <g stroke="#0f172a" strokeWidth="1.5">
+                            <line x1={startX + barWidth} y1={offsetY + 24} x2={startX + barWidth} y2={offsetY + 72} />
+                            <line x1={startX + barWidth} y1={offsetY + 150} x2={startX + barWidth} y2={offsetY + 205} />
+                          </g>
+                        ) : !isLastBarOfEntireExercise ? (
+                          /* Standard barline at the end of a non-final system row */
+                          <g stroke="#0f172a" strokeWidth="1.5">
+                            <line x1={startX + barWidth} y1={offsetY + 24} x2={startX + barWidth} y2={offsetY + 72} />
+                            <line x1={startX + barWidth} y1={offsetY + 150} x2={startX + barWidth} y2={offsetY + 205} />
                           </g>
                         ) : (
-                          /* Down Strum (V) or Up Strum (⋀) on Staff (No white boxes, pure engraving) */
-                          <g id="staff-strum-mark">
-                            <text
-                              x={beatX}
-                              y={54}
-                              fontSize="17"
-                              fontWeight="900"
-                              fontFamily="monospace, serif"
-                              fill={isBeatActive ? '#ea580c' : '#0f172a'}
-                              textAnchor="middle"
-                            >
-                              {beat.strumMark === '^' || beat.strumMark === '⋀' || beat.type === 'up-strum'
-                                ? '⋀'
-                                : 'V'}
-                            </text>
+                          /* Final Repeat Sign (Double Barline + 2 Dots) on the very last bar */
+                          <g id="final-repeat-barline">
+                            <line
+                              x1={startX + barWidth - 4}
+                              y1={offsetY + 24}
+                              x2={startX + barWidth - 4}
+                              y2={offsetY + 72}
+                              stroke="#0f172a"
+                              strokeWidth="1.5"
+                            />
+                            <line
+                              x1={startX + barWidth}
+                              y1={offsetY + 24}
+                              x2={startX + barWidth}
+                              y2={offsetY + 72}
+                              stroke="#0f172a"
+                              strokeWidth="3.5"
+                            />
+                            {/* Repeat Dots on Staff */}
+                            <circle cx={startX + barWidth - 10} cy={offsetY + 42} r="2.2" fill="#0f172a" />
+                            <circle cx={startX + barWidth - 10} cy={offsetY + 54} r="2.2" fill="#0f172a" />
+
+                            {/* Repeat on TAB */}
+                            <line
+                              x1={startX + barWidth - 4}
+                              y1={offsetY + 150}
+                              x2={startX + barWidth - 4}
+                              y2={offsetY + 205}
+                              stroke="#0f172a"
+                              strokeWidth="1.5"
+                            />
+                            <line
+                              x1={startX + barWidth}
+                              y1={offsetY + 150}
+                              x2={startX + barWidth}
+                              y2={offsetY + 205}
+                              stroke="#0f172a"
+                              strokeWidth="3.5"
+                            />
+                            {/* Repeat Dots on TAB */}
+                            <circle cx={startX + barWidth - 10} cy={offsetY + 172} r="2.2" fill="#0f172a" />
+                            <circle cx={startX + barWidth - 10} cy={offsetY + 183} r="2.2" fill="#0f172a" />
                           </g>
                         )}
-
-                        {/* --- TAB RENDERING --- */}
-                        {isBassOrSingle ? (
-                          <g id="tab-fret-number">
-                            {/* White cutout behind fret number so string line does not cut through */}
-                            <rect
-                              x={beatX - 7}
-                              y={noteInfo.tabStringY - 7}
-                              width={14}
-                              height={14}
-                              fill="white"
-                            />
-                            <text
-                              x={beatX}
-                              y={noteInfo.tabStringY + 4.5}
-                              fontSize="13"
-                              fontWeight="900"
-                              fontFamily="monospace"
-                              fill={isBeatActive ? '#ea580c' : '#0f172a'}
-                              textAnchor="middle"
-                            >
-                              {beat.fret !== undefined ? beat.fret : '0'}
-                            </text>
-                          </g>
-                        ) : (
-                          /* Strum mark (V or ⋀) on TAB */
-                          <g id="tab-strum-mark">
-                            {/* White cutout behind strum symbol */}
-                            <rect
-                              x={beatX - 8}
-                              y={170}
-                              width={16}
-                              height={16}
-                              fill="white"
-                            />
-                            <text
-                              x={beatX}
-                              y={183}
-                              fontSize="15"
-                              fontWeight="900"
-                              fontFamily="monospace, serif"
-                              fill={isBeatActive ? '#ea580c' : '#0f172a'}
-                              textAnchor="middle"
-                            >
-                              {beat.strumMark === '^' || beat.strumMark === '⋀' || beat.type === 'up-strum'
-                                ? '⋀'
-                                : 'V'}
-                            </text>
-                          </g>
-                        )}
-
-                        {/* --- COUNT DIGIT (1, 2, 3, 4) --- */}
-                        <text
-                          x={beatX}
-                          y={232}
-                          fontSize="12"
-                          fontWeight={isBeatActive ? '900' : 'bold'}
-                          fontFamily="monospace"
-                          fill={isBeatActive ? '#ea580c' : '#475569'}
-                          textAnchor="middle"
-                        >
-                          {beat.beatNumber}
-                        </text>
                       </g>
                     );
                   })}
-
-                  {/* Measure Dividing Barline */}
-                  {barIdx < bars.length - 1 ? (
-                    <g stroke="#0f172a" strokeWidth="1.5">
-                      <line x1={startX + barWidth} y1={24} x2={startX + barWidth} y2={72} />
-                      <line x1={startX + barWidth} y1={150} x2={startX + barWidth} y2={205} />
-                    </g>
-                  ) : (
-                    /* Final Repeat Sign (Double Barline + 2 Dots) */
-                    <g id="final-repeat-barline">
-                      <line
-                        x1={startX + barWidth - 4}
-                        y1={24}
-                        x2={startX + barWidth - 4}
-                        y2={72}
-                        stroke="#0f172a"
-                        strokeWidth="1.5"
-                      />
-                      <line
-                        x1={startX + barWidth}
-                        y1={24}
-                        x2={startX + barWidth}
-                        y2={72}
-                        stroke="#0f172a"
-                        strokeWidth="3.5"
-                      />
-                      {/* Repeat Dots on Staff */}
-                      <circle cx={startX + barWidth - 10} cy={42} r="2.2" fill="#0f172a" />
-                      <circle cx={startX + barWidth - 10} cy={54} r="2.2" fill="#0f172a" />
-
-                      {/* Repeat on TAB */}
-                      <line
-                        x1={startX + barWidth - 4}
-                        y1={150}
-                        x2={startX + barWidth - 4}
-                        y2={205}
-                        stroke="#0f172a"
-                        strokeWidth="1.5"
-                      />
-                      <line
-                        x1={startX + barWidth}
-                        y1={150}
-                        x2={startX + barWidth}
-                        y2={205}
-                        stroke="#0f172a"
-                        strokeWidth="3.5"
-                      />
-                      {/* Repeat Dots on TAB */}
-                      <circle cx={startX + barWidth - 10} cy={172} r="2.2" fill="#0f172a" />
-                      <circle cx={startX + barWidth - 10} cy={183} r="2.2" fill="#0f172a" />
-                    </g>
-                  )}
                 </g>
               );
             })}
