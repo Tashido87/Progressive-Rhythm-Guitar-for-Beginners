@@ -15,6 +15,7 @@ import { LessonData } from '../types';
 import { CHORDS_DICTIONARY } from '../data/chordsData';
 import { InteractiveChordDiagram } from './InteractiveChordDiagram';
 import { InteractiveRhythmPlayer } from './InteractiveRhythmPlayer';
+import { BookRhythmVariations } from './BookRhythmVariations';
 import { ExerciseTrainer } from './ExerciseTrainer';
 import { OpenPositionNotesViewer } from './OpenPositionNotesViewer';
 import { StringNotesViewer } from './StringNotesViewer';
@@ -182,6 +183,16 @@ export const LessonViewer: React.FC<LessonViewerProps> = ({
               />
             ))}
           </div>
+        </section>
+      )}
+
+      {/* Authentic Book Rhythm Variations (e.g. 3/4 time 6 variations) */}
+      {lesson.rhythmVariationsBook && (
+        <section className="space-y-4">
+          <BookRhythmVariations
+            data={lesson.rhythmVariationsBook}
+            availableChords={lesson.chords || ['C', 'Em', 'F', 'G', 'Am', 'D', 'A', 'E']}
+          />
         </section>
       )}
 

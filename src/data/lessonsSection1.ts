@@ -785,6 +785,18 @@ export const SECTION_1_LESSONS: LessonData[] = [
         timeSignature: '4/4',
         recommendedBpm: 80,
         rhythmPatternId: 'r_bass_pick_1',
+        suggestedRhythm: {
+          label: 'Suggested Rhythm',
+          timeSignature: '4/4',
+          spokenCount: 'Bass, 2, 3, Bass',
+          patternText: '| Bass  V  V  Bass |',
+          beats: [
+            { count: '1', stroke: 'Bass', type: 'bass-pick', accent: true },
+            { count: '2', stroke: 'V', type: 'down' },
+            { count: '3', stroke: 'V', type: 'down' },
+            { count: '4', stroke: 'Bass', type: 'bass-pick' }
+          ]
+        },
         chords: [
           { chordName: 'C', bars: 1 },
           { chordName: 'Em', bars: 1 },
@@ -847,6 +859,18 @@ export const SECTION_1_LESSONS: LessonData[] = [
         timeSignature: '4/4',
         recommendedBpm: 85,
         rhythmPatternId: 'r_country_alternating',
+        suggestedRhythm: {
+          label: 'Suggested Rhythm',
+          timeSignature: '4/4',
+          spokenCount: 'Bass 1, 2, Bass 2, 4',
+          patternText: '| Bass 1  V  Bass 2  V |',
+          beats: [
+            { count: '1', stroke: 'Bass', type: 'bass-pick', accent: true },
+            { count: '2', stroke: 'V', type: 'down' },
+            { count: '3', stroke: 'Alt Bass', type: 'bass-pick' },
+            { count: '4', stroke: 'V', type: 'down' }
+          ]
+        },
         chords: [
           { chordName: 'C', bars: 1 },
           { chordName: 'F', bars: 1 },
@@ -993,6 +1017,86 @@ export const SECTION_1_LESSONS: LessonData[] = [
       '3/4 Bass Picking တွင် Beat 1 ၌ Bass ကြိုးခတ်ပြီး Beat 2, 3 တွင် Chord ခတ်သည်။'
     ],
     chords: ['C', 'Em', 'F', 'G', 'A', 'D', 'E'],
+    rhythmVariationsBook: {
+      title: 'Rhythm Variations in 3/4 time.',
+      titleMy: '3/4 စည်းဝါး ရစ်သမ် ကွဲပြားမှုများ (၆ မျိုး)',
+      timeSignature: '3/4',
+      defaultChord: 'C',
+      footerNoteEn: 'Apply these rhythms to the turnaround progressions so far studied.',
+      footerNoteMy: 'ယခင်သင်ယူခဲ့သော Turnaround Progression များတွင် ဤ Rhythm ပုံစံများကို အစားထိုး လေ့ကျင့်ပါ။',
+      variations: [
+        {
+          id: 'rv_34_1',
+          number: 1,
+          spokenCount: '1 + 2 + 3',
+          beats: [
+            { count: '1', stroke: 'V', type: 'down', accent: true },
+            { count: '+', stroke: '⋀', type: 'up' },
+            { count: '2', stroke: 'V', type: 'down' },
+            { count: '+', stroke: '⋀', type: 'up' },
+            { count: '3', stroke: 'V', type: 'down' }
+          ]
+        },
+        {
+          id: 'rv_34_2',
+          number: 2,
+          spokenCount: '1 + 2 + 3 +',
+          beats: [
+            { count: '1', stroke: 'V', type: 'down', accent: true },
+            { count: '+', stroke: '⋀', type: 'up' },
+            { count: '2', stroke: 'V', type: 'down' },
+            { count: '+', stroke: '⋀', type: 'up' },
+            { count: '3', stroke: 'V', type: 'down' },
+            { count: '+', stroke: '⋀', type: 'up' }
+          ]
+        },
+        {
+          id: 'rv_34_3',
+          number: 3,
+          spokenCount: '1 + 2 3',
+          beats: [
+            { count: '1', stroke: 'V', type: 'down', accent: true },
+            { count: '+', stroke: '⋀', type: 'up' },
+            { count: '2', stroke: 'V', type: 'down' },
+            { count: '3', stroke: 'V', type: 'down' }
+          ]
+        },
+        {
+          id: 'rv_34_4',
+          number: 4,
+          spokenCount: '1 2 + 3 +',
+          beats: [
+            { count: '1', stroke: 'V', type: 'down', accent: true },
+            { count: '2', stroke: 'V', type: 'down' },
+            { count: '+', stroke: '⋀', type: 'up' },
+            { count: '3', stroke: 'V', type: 'down' },
+            { count: '+', stroke: '⋀', type: 'up' }
+          ]
+        },
+        {
+          id: 'rv_34_5',
+          number: 5,
+          spokenCount: '1 2 + 3',
+          beats: [
+            { count: '1', stroke: 'V', type: 'down', accent: true },
+            { count: '2', stroke: 'V', type: 'down' },
+            { count: '+', stroke: '⋀', type: 'up' },
+            { count: '3', stroke: 'V', type: 'down' }
+          ]
+        },
+        {
+          id: 'rv_34_6',
+          number: 6,
+          spokenCount: '1 2 3 +',
+          beats: [
+            { count: '1', stroke: 'V', type: 'down', accent: true },
+            { count: '2', stroke: 'V', type: 'down' },
+            { count: '3', stroke: 'V', type: 'down' },
+            { count: '+', stroke: '⋀', type: 'up' }
+          ]
+        }
+      ]
+    },
     rhythms: [
       {
         id: 'r_waltz_basic',
@@ -1032,13 +1136,71 @@ export const SECTION_1_LESSONS: LessonData[] = [
         exerciseNumber: 20,
         timeSignature: '3/4',
         recommendedBpm: 90,
+        suggestedRhythm: {
+          label: 'Suggested Rhythm',
+          timeSignature: '3/4',
+          spokenCount: '1, 2-and, 3',
+          patternText: '| V  V ⋀  V |',
+          beats: [
+            { count: '1', stroke: 'V', type: 'down', accent: true },
+            { count: '2', stroke: 'V', type: 'down' },
+            { count: '+', stroke: '⋀', type: 'up' },
+            { count: '3', stroke: 'V', type: 'down' }
+          ]
+        },
         chords: [
           { chordName: 'C', bars: 1 },
           { chordName: 'Em', bars: 1 },
           { chordName: 'F', bars: 1 },
           { chordName: 'G', bars: 1 }
         ],
-        notesMy: 'Bar တိုင်း၏ ပထမအချက် (Beat 1) ကို အလေးပေးခတ်ရန် မမေ့ပါနှင့်။'
+        scoreNotation: {
+          cassetteLabel: 'EXERCISE 20',
+          repeatEnd: true,
+          bars: [
+            {
+              barNumber: 1,
+              chordName: 'C',
+              beats: [
+                { beatNumber: '1', type: 'down-strum', strumMark: 'V', label: '1' },
+                { beatNumber: '2', type: 'down-strum', strumMark: 'V', label: '2' },
+                { beatNumber: '+', type: 'up-strum', strumMark: '⋀', label: '+' },
+                { beatNumber: '3', type: 'down-strum', strumMark: 'V', label: '3' }
+              ]
+            },
+            {
+              barNumber: 2,
+              chordName: 'Em',
+              beats: [
+                { beatNumber: '1', type: 'down-strum', strumMark: 'V', label: '1' },
+                { beatNumber: '2', type: 'down-strum', strumMark: 'V', label: '2' },
+                { beatNumber: '+', type: 'up-strum', strumMark: '⋀', label: '+' },
+                { beatNumber: '3', type: 'down-strum', strumMark: 'V', label: '3' }
+              ]
+            },
+            {
+              barNumber: 3,
+              chordName: 'F',
+              beats: [
+                { beatNumber: '1', type: 'down-strum', strumMark: 'V', label: '1' },
+                { beatNumber: '2', type: 'down-strum', strumMark: 'V', label: '2' },
+                { beatNumber: '+', type: 'up-strum', strumMark: '⋀', label: '+' },
+                { beatNumber: '3', type: 'down-strum', strumMark: 'V', label: '3' }
+              ]
+            },
+            {
+              barNumber: 4,
+              chordName: 'G',
+              beats: [
+                { beatNumber: '1', type: 'down-strum', strumMark: 'V', label: '1' },
+                { beatNumber: '2', type: 'down-strum', strumMark: 'V', label: '2' },
+                { beatNumber: '+', type: 'up-strum', strumMark: '⋀', label: '+' },
+                { beatNumber: '3', type: 'down-strum', strumMark: 'V', label: '3' }
+              ]
+            }
+          ]
+        },
+        notesMy: 'Bar တိုင်း၏ ပထမအချက် (Beat 1) ကို အလေးပေးခတ်ရန် မမေ့ပါနှင့်။ Suggested Rhythm အတိုင်း Beat 2 တွင် Down/Up ခတ်ပါ။'
       },
       {
         id: 'ex_21',
@@ -1054,6 +1216,84 @@ export const SECTION_1_LESSONS: LessonData[] = [
           { chordName: 'A', bars: 1 },
           { chordName: 'E', bars: 1 }
         ],
+        scoreNotation: {
+          cassetteLabel: 'EXERCISE 21',
+          repeatEnd: true,
+          bars: [
+            {
+              barNumber: 1,
+              chordName: 'A',
+              beats: [
+                { beatNumber: '1', type: 'bass', string: 5, fret: 0, label: 'Bass A' },
+                { beatNumber: '2', type: 'down-strum', strumMark: 'V', label: 'Strum' },
+                { beatNumber: '3', type: 'down-strum', strumMark: 'V', label: 'Strum' }
+              ]
+            },
+            {
+              barNumber: 2,
+              chordName: 'A',
+              beats: [
+                { beatNumber: '1', type: 'bass', string: 6, fret: 0, label: 'Bass E' },
+                { beatNumber: '2', type: 'down-strum', strumMark: 'V', label: 'Strum' },
+                { beatNumber: '3', type: 'down-strum', strumMark: 'V', label: 'Strum' }
+              ]
+            },
+            {
+              barNumber: 3,
+              chordName: 'D',
+              beats: [
+                { beatNumber: '1', type: 'bass', string: 4, fret: 0, label: 'Bass D' },
+                { beatNumber: '2', type: 'down-strum', strumMark: 'V', label: 'Strum' },
+                { beatNumber: '3', type: 'down-strum', strumMark: 'V', label: 'Strum' }
+              ]
+            },
+            {
+              barNumber: 4,
+              chordName: 'D',
+              beats: [
+                { beatNumber: '1', type: 'bass', string: 5, fret: 0, label: 'Bass A' },
+                { beatNumber: '2', type: 'down-strum', strumMark: 'V', label: 'Strum' },
+                { beatNumber: '3', type: 'down-strum', strumMark: 'V', label: 'Strum' }
+              ]
+            },
+            {
+              barNumber: 5,
+              chordName: 'E',
+              beats: [
+                { beatNumber: '1', type: 'bass', string: 6, fret: 0, label: 'Bass E' },
+                { beatNumber: '2', type: 'down-strum', strumMark: 'V', label: 'Strum' },
+                { beatNumber: '3', type: 'down-strum', strumMark: 'V', label: 'Strum' }
+              ]
+            },
+            {
+              barNumber: 6,
+              chordName: 'E',
+              beats: [
+                { beatNumber: '1', type: 'bass', string: 5, fret: 2, label: 'Bass B' },
+                { beatNumber: '2', type: 'down-strum', strumMark: 'V', label: 'Strum' },
+                { beatNumber: '3', type: 'down-strum', strumMark: 'V', label: 'Strum' }
+              ]
+            },
+            {
+              barNumber: 7,
+              chordName: 'A',
+              beats: [
+                { beatNumber: '1', type: 'bass', string: 5, fret: 0, label: 'Bass A' },
+                { beatNumber: '2', type: 'down-strum', strumMark: 'V', label: 'Strum' },
+                { beatNumber: '3', type: 'down-strum', strumMark: 'V', label: 'Strum' }
+              ]
+            },
+            {
+              barNumber: 8,
+              chordName: 'E',
+              beats: [
+                { beatNumber: '1', type: 'bass', string: 6, fret: 0, label: 'Bass E' },
+                { beatNumber: '2', type: 'down-strum', strumMark: 'V', label: 'Strum' },
+                { beatNumber: '3', type: 'down-strum', strumMark: 'V', label: 'Strum' }
+              ]
+            }
+          ]
+        },
         notesMy: '၂ Bar ရစ်သမ်တွဲ ဖြစ်သည်။ Bar 1 တွင် Bass + Strums, Bar 2 တွင် Alternating Bass + Strums ပေါင်းစပ်ထားသည်။'
       }
     ],

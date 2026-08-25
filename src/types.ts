@@ -103,6 +103,40 @@ export interface ScoreBeat {
   label?: string;
 }
 
+export interface SuggestedRhythmBeat {
+  count: string; // e.g. "1", "+", "2", "3", "4"
+  type: 'down' | 'up' | 'rest' | 'chuk' | 'bass-pick';
+  stroke: 'V' | '⋀' | '^' | 'X' | '𝄽' | string;
+  accent?: boolean;
+}
+
+export interface SuggestedRhythmDef {
+  label?: string; // e.g. "Suggested Rhythm"
+  timeSignature?: '4/4' | '3/4' | '6/8' | '2/4';
+  spokenCount?: string; // e.g. "1, 2-and, 3"
+  patternText?: string; // e.g. "| V  V ⋀  V |"
+  beats: SuggestedRhythmBeat[];
+}
+
+export interface RhythmVariationItem {
+  id: string;
+  number: number; // 1, 2, 3, 4, 5, 6...
+  name?: string;
+  spokenCount: string; // e.g. "1 + 2 + 3"
+  beats: SuggestedRhythmBeat[];
+  defaultBpm?: number;
+}
+
+export interface RhythmVariationsBookData {
+  title: string; // e.g. "Rhythm Variations in 3/4 time."
+  titleMy?: string;
+  timeSignature: '3/4' | '4/4' | '6/8' | '2/4';
+  defaultChord: string; // e.g. "C"
+  footerNoteEn?: string; // e.g. "Apply these rhythms to the turnaround progressions so far studied."
+  footerNoteMy?: string;
+  variations: RhythmVariationItem[];
+}
+
 export interface ScoreBar {
   barNumber: number;
   chordName: string;
@@ -117,6 +151,7 @@ export interface ExerciseData {
   timeSignature: '4/4' | '3/4' | '6/8' | '2/4';
   recommendedBpm: number;
   rhythmPatternId?: string;
+  suggestedRhythm?: SuggestedRhythmDef;
   chords: ChordProgressionItem[];
   tabNotes?: {
     string: number;
@@ -145,6 +180,7 @@ export interface LessonData {
   keyPointsEn?: string[];
   chords: string[]; // Chord IDs introduced
   rhythms: RhythmPattern[];
+  rhythmVariationsBook?: RhythmVariationsBookData;
   exercises: ExerciseData[];
   techniques: {
     nameEn: string;

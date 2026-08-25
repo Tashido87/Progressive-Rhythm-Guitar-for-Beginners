@@ -229,7 +229,27 @@ function getOrGenerateScoreBars(exercise: ExerciseData): ScoreBar[] {
       const altBassFret = rootInfo.string === 5 ? (chordItem.chordName.startsWith('C') ? 2 : 2) : 2;
       const beats: ScoreBeat[] = [];
 
-      if (isAlternatingBass) {
+      if (exercise.suggestedRhythm && exercise.suggestedRhythm.beats.length > 0) {
+        // Exercise has explicit suggested rhythm (e.g. Exercise 20: | V  V ⋀  V | 1 2+ 3)
+        exercise.suggestedRhythm.beats.forEach((sBeat) => {
+          if (sBeat.type === 'bass-pick' || sBeat.stroke === 'Bass') {
+            beats.push({
+              beatNumber: sBeat.count,
+              type: 'bass',
+              string: rootInfo.string,
+              fret: rootInfo.fret,
+              label: 'Bass'
+            });
+          } else {
+            beats.push({
+              beatNumber: sBeat.count,
+              type: sBeat.type === 'up' || sBeat.stroke === '⋀' || sBeat.stroke === '^' ? 'up-strum' : 'down-strum',
+              strumMark: (sBeat.stroke === '^' ? '⋀' : sBeat.stroke) as any || 'V',
+              label: sBeat.count
+            });
+          }
+        });
+      } else if (isAlternatingBass) {
         // Exercise 19 pattern: Beat 1: Root Bass, Beat 2: Strum V, Beat 3: Alternate Bass, Beat 4: Strum V
         beats.push({
           beatNumber: '1',
@@ -844,6 +864,70 @@ export const SheetMusicTabViewer: React.FC<SheetMusicTabViewerProps> = ({
           </svg>
         </div>
       </div>
+
+      {/* Suggested Rhythm Display (Matching Book Style: | V  V ⋀  V | with 1 2+ 3 counts) */}
+      {exercise.suggestedRhythm && (
+        <div className="mt-3 p-3.5 sm:p-4 rounded-2xl bg-white border border-slate-300 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-2xs">
+          <div className="flex flex-wrap items-center gap-3">
+            <div className="text-xs font-mono font-black text-slate-800 uppercase tracking-wider bg-slate-100 px-3 py-1.5 rounded-xl border border-slate-200">
+              {exercise.suggestedRhythm.label || 'Suggested Rhythm'}
+            </div>
+
+            {/* Book Style Measure Container: | V   V ⋀   V | with 1   2 +   3 */}
+            <div className="flex items-center gap-1 font-mono font-black text-slate-900 bg-[#fcfbf9] px-3.5 py-1.5 rounded-xl border border-slate-300 shadow-inner">
+              <span className="text-xl text-slate-800 font-light mr-1.5">|</span>
+              {exercise.suggestedRhythm.beats.map((b, bIdx) => (
+                <div
+                  key={bIdx}
+                  onClick={() => {
+                    soundEngine.initAudio();
+                    const chord = CHORDS_DICTIONARY[exercise.chords[0]?.chordName || 'C'];
+                    if (b.type === 'up' || b.stroke === '⋀' || b.stroke === '^') {
+                      soundEngine.playChord(chord, 'up', 40);
+                    } else {
+                      soundEngine.playChord(chord, 'down', 45);
+                    }
+                  }}
+                  className="flex flex-col items-center px-2 py-0.5 rounded-lg hover:bg-orange-100/60 cursor-pointer transition-colors"
+                  title={`Beat ${b.count}: Click to hear stroke`}
+                >
+                  <span className="text-lg font-black text-slate-900 leading-none">
+                    {b.stroke === '^' ? '⋀' : b.stroke}
+                  </span>
+                  <span className="text-xs font-bold text-slate-700 mt-1">
+                    {b.count}
+                  </span>
+                </div>
+              ))}
+              <span className="text-xl text-slate-800 font-light ml-1.5">|</span>
+            </div>
+          </div>
+
+          {/* Quick Rhythm Playback Preview Button */}
+          <button
+            onClick={() => {
+              soundEngine.initAudio();
+              const chord = CHORDS_DICTIONARY[exercise.chords[0]?.chordName || 'C'];
+              if (chord && exercise.suggestedRhythm) {
+                exercise.suggestedRhythm.beats.forEach((b, idx) => {
+                  setTimeout(() => {
+                    if (b.type === 'up' || b.stroke === '⋀' || b.stroke === '^') {
+                      soundEngine.playChord(chord, 'up', 40);
+                    } else {
+                      soundEngine.playChord(chord, 'down', 45);
+                    }
+                  }, idx * 280);
+                });
+              }
+            }}
+            className="flex items-center gap-1.5 px-3.5 py-2 bg-orange-50 hover:bg-orange-100 text-orange-700 rounded-xl border border-orange-200 text-xs font-mono font-bold cursor-pointer shadow-2xs transition-colors shrink-0"
+            title="Preview Suggested Rhythm Audio"
+          >
+            <Volume2 className="w-3.5 h-3.5" />
+            <span>Hear Suggested Rhythm</span>
+          </button>
+        </div>
+      )}
 
       {/* Interactive Helper Footer */}
       <div className="mt-3 flex flex-wrap items-center justify-between gap-2 text-xs text-slate-500">
