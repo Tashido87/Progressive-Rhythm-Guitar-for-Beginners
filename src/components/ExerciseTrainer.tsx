@@ -125,11 +125,21 @@ export const ExerciseTrainer: React.FC<ExerciseTrainerProps> = ({ exercise }) =>
 
     playChordBeat(currentChordItem, beatInBarRef.current, barIndexRef.current);
 
-    const beatIntervalMs = (60 / bpm) * 1000;
+    const barDef = exercise.scoreNotation?.bars?.[barIndexRef.current];
+    const currentBeatsCount = barDef ? barDef.beats.length : beatsPerBar;
+    const currentScoreBeat = barDef?.beats?.[beatInBarRef.current];
+    const nextScoreBeat = barDef?.beats?.[beatInBarRef.current + 1];
+
+    // Eighth notes (like beat 2 followed by + or + itself) take half a quarter note duration
+    const isEighth = Boolean(
+      currentScoreBeat &&
+        (currentScoreBeat.beatNumber === '+' || (nextScoreBeat && nextScoreBeat.beatNumber === '+'))
+    );
+    const beatIntervalMs = ((60 / bpm) * 1000) * (isEighth ? 0.5 : 1);
 
     timerRef.current = setTimeout(() => {
       beatInBarRef.current += 1;
-      if (beatInBarRef.current >= beatsPerBar) {
+      if (beatInBarRef.current >= currentBeatsCount) {
         beatInBarRef.current = 0;
         barIndexRef.current += 1;
 
@@ -146,7 +156,7 @@ export const ExerciseTrainer: React.FC<ExerciseTrainerProps> = ({ exercise }) =>
       }
       tick();
     }, beatIntervalMs);
-  }, [isPlaying, exercise.chords, playChordBeat, bpm, beatsPerBar, totalBars, isLooping]);
+  }, [isPlaying, exercise.chords, playChordBeat, bpm, beatsPerBar, totalBars, isLooping, exercise.scoreNotation]);
 
   useEffect(() => {
     if (isPlaying) {

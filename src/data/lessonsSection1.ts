@@ -1204,15 +1204,18 @@ export const SECTION_1_LESSONS: LessonData[] = [
       },
       {
         id: 'ex_21',
-        title: 'Exercise 21 - Bass Note Picking in 3/4 Time',
-        titleMy: 'လေ့ကျင့်ခန်း ၂၁ - 3/4 စည်းဝါး Bass Picking (A - D - E)',
+        title: 'Exercise 21 - Bass Note Picking (3/4 Time)',
+        titleMy: 'လေ့ကျင့်ခန်း ၂၁ - 3/4 စည်းဝါး Bass Note Picking (Alternating Bass)',
         exerciseNumber: 21,
         timeSignature: '3/4',
         recommendedBpm: 90,
         chords: [
-          { chordName: 'A', bars: 2 },
-          { chordName: 'D', bars: 2 },
-          { chordName: 'E', bars: 2 },
+          { chordName: 'A', bars: 1 },
+          { chordName: 'A', bars: 1 },
+          { chordName: 'D', bars: 1 },
+          { chordName: 'D', bars: 1 },
+          { chordName: 'E', bars: 1 },
+          { chordName: 'E', bars: 1 },
           { chordName: 'A', bars: 1 },
           { chordName: 'E', bars: 1 }
         ],
@@ -1225,17 +1228,18 @@ export const SECTION_1_LESSONS: LessonData[] = [
               chordName: 'A',
               beats: [
                 { beatNumber: '1', type: 'bass', string: 5, fret: 0, label: 'Bass A' },
-                { beatNumber: '2', type: 'down-strum', strumMark: 'V', label: 'Strum' },
-                { beatNumber: '3', type: 'down-strum', strumMark: 'V', label: 'Strum' }
+                { beatNumber: '2', type: 'down-strum', strumMark: 'V', label: '2' },
+                { beatNumber: '+', type: 'up-strum', strumMark: '⋀', label: '+' },
+                { beatNumber: '3', type: 'down-strum', strumMark: 'V', label: '3' }
               ]
             },
             {
               barNumber: 2,
               chordName: 'A',
               beats: [
-                { beatNumber: '1', type: 'bass', string: 6, fret: 0, label: 'Bass E' },
-                { beatNumber: '2', type: 'down-strum', strumMark: 'V', label: 'Strum' },
-                { beatNumber: '3', type: 'down-strum', strumMark: 'V', label: 'Strum' }
+                { beatNumber: '1', type: 'bass', string: 4, fret: 2, label: 'Bass E' },
+                { beatNumber: '2', type: 'down-strum', strumMark: 'V', label: '2' },
+                { beatNumber: '3', type: 'down-strum', strumMark: 'V', label: '3' }
               ]
             },
             {
@@ -1243,8 +1247,9 @@ export const SECTION_1_LESSONS: LessonData[] = [
               chordName: 'D',
               beats: [
                 { beatNumber: '1', type: 'bass', string: 4, fret: 0, label: 'Bass D' },
-                { beatNumber: '2', type: 'down-strum', strumMark: 'V', label: 'Strum' },
-                { beatNumber: '3', type: 'down-strum', strumMark: 'V', label: 'Strum' }
+                { beatNumber: '2', type: 'down-strum', strumMark: 'V', label: '2' },
+                { beatNumber: '+', type: 'up-strum', strumMark: '⋀', label: '+' },
+                { beatNumber: '3', type: 'down-strum', strumMark: 'V', label: '3' }
               ]
             },
             {
@@ -1252,8 +1257,8 @@ export const SECTION_1_LESSONS: LessonData[] = [
               chordName: 'D',
               beats: [
                 { beatNumber: '1', type: 'bass', string: 5, fret: 0, label: 'Bass A' },
-                { beatNumber: '2', type: 'down-strum', strumMark: 'V', label: 'Strum' },
-                { beatNumber: '3', type: 'down-strum', strumMark: 'V', label: 'Strum' }
+                { beatNumber: '2', type: 'down-strum', strumMark: 'V', label: '2' },
+                { beatNumber: '3', type: 'down-strum', strumMark: 'V', label: '3' }
               ]
             },
             {
@@ -1261,8 +1266,9 @@ export const SECTION_1_LESSONS: LessonData[] = [
               chordName: 'E',
               beats: [
                 { beatNumber: '1', type: 'bass', string: 6, fret: 0, label: 'Bass E' },
-                { beatNumber: '2', type: 'down-strum', strumMark: 'V', label: 'Strum' },
-                { beatNumber: '3', type: 'down-strum', strumMark: 'V', label: 'Strum' }
+                { beatNumber: '2', type: 'down-strum', strumMark: 'V', label: '2' },
+                { beatNumber: '+', type: 'up-strum', strumMark: '⋀', label: '+' },
+                { beatNumber: '3', type: 'down-strum', strumMark: 'V', label: '3' }
               ]
             },
             {
@@ -1270,8 +1276,8 @@ export const SECTION_1_LESSONS: LessonData[] = [
               chordName: 'E',
               beats: [
                 { beatNumber: '1', type: 'bass', string: 5, fret: 2, label: 'Bass B' },
-                { beatNumber: '2', type: 'down-strum', strumMark: 'V', label: 'Strum' },
-                { beatNumber: '3', type: 'down-strum', strumMark: 'V', label: 'Strum' }
+                { beatNumber: '2', type: 'down-strum', strumMark: 'V', label: '2' },
+                { beatNumber: '3', type: 'down-strum', strumMark: 'V', label: '3' }
               ]
             },
             {
@@ -1279,8 +1285,9 @@ export const SECTION_1_LESSONS: LessonData[] = [
               chordName: 'A',
               beats: [
                 { beatNumber: '1', type: 'bass', string: 5, fret: 0, label: 'Bass A' },
-                { beatNumber: '2', type: 'down-strum', strumMark: 'V', label: 'Strum' },
-                { beatNumber: '3', type: 'down-strum', strumMark: 'V', label: 'Strum' }
+                { beatNumber: '2', type: 'down-strum', strumMark: 'V', label: '2' },
+                { beatNumber: '+', type: 'up-strum', strumMark: '⋀', label: '+' },
+                { beatNumber: '3', type: 'down-strum', strumMark: 'V', label: '3' }
               ]
             },
             {
@@ -1288,13 +1295,13 @@ export const SECTION_1_LESSONS: LessonData[] = [
               chordName: 'E',
               beats: [
                 { beatNumber: '1', type: 'bass', string: 6, fret: 0, label: 'Bass E' },
-                { beatNumber: '2', type: 'down-strum', strumMark: 'V', label: 'Strum' },
-                { beatNumber: '3', type: 'down-strum', strumMark: 'V', label: 'Strum' }
+                { beatNumber: '2', type: 'down-strum', strumMark: 'V', label: '2' },
+                { beatNumber: '3', type: 'down-strum', strumMark: 'V', label: '3' }
               ]
             }
           ]
         },
-        notesMy: '၂ Bar ရစ်သမ်တွဲ ဖြစ်သည်။ Bar 1 တွင် Bass + Strums, Bar 2 တွင် Alternating Bass + Strums ပေါင်းစပ်ထားသည်။'
+        notesMy: 'The progression combines an alternating bass with a 2-bar rhythm: Bar 1, 3, 5, 7 တွင် (1, 2+, 3) ရစ်သမ်နှင့် Root Bass ဖြစ်ပြီး၊ Bar 2, 4, 6, 8 တွင် (1, 2, 3) ရစ်သမ်နှင့် Alternating Bass တို့ ပေါင်းစပ်ထားသည်။'
       }
     ],
     techniques: [

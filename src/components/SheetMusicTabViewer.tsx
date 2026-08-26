@@ -611,28 +611,40 @@ export const SheetMusicTabViewer: React.FC<SheetMusicTabViewerProps> = ({
                           />
                         )}
 
-                        {/* Chord Name Header above Staff */}
-                        <g>
-                          <rect
-                            x={startX + barWidth / 2 - 22}
-                            y={offsetY}
-                            width={44}
-                            height={18}
-                            rx="4"
-                            fill={isBarActive ? '#ea580c' : '#f1f5f9'}
-                          />
-                          <text
-                            x={startX + barWidth / 2}
-                            y={offsetY + 13}
-                            fontSize="14"
-                            fontWeight="900"
-                            fontFamily="monospace"
-                            fill={isBarActive ? '#ffffff' : '#0f172a'}
-                            textAnchor="middle"
-                          >
-                            {bar.chordName}
-                          </text>
-                        </g>
+                        {/* Chord Name Header above Staff (Authentic Method Book Typography) */}
+                        {(() => {
+                          const prevBarInSys = localBarIdx > 0 ? sys.bars[localBarIdx - 1]?.bar : null;
+                          const isContinuation = prevBarInSys && prevBarInSys.chordName === bar.chordName;
+
+                          // If it's a continuation of the same chord, only show during active playback
+                          if (isContinuation && !isBarActive) return null;
+
+                          return (
+                            <g>
+                              {isBarActive && (
+                                <rect
+                                  x={startX + barWidth / 2 - 20}
+                                  y={offsetY}
+                                  width={40}
+                                  height={18}
+                                  rx="4"
+                                  fill="#ea580c"
+                                />
+                              )}
+                              <text
+                                x={startX + barWidth / 2}
+                                y={offsetY + 14}
+                                fontSize="16"
+                                fontWeight="900"
+                                fontFamily="system-ui, sans-serif"
+                                fill={isBarActive ? '#ffffff' : '#0f172a'}
+                                textAnchor="middle"
+                              >
+                                {bar.chordName}
+                              </text>
+                            </g>
+                          );
+                        })()}
 
                         {/* Beats in this Bar */}
                         {bar.beats.map((beat, beatIdx) => {
